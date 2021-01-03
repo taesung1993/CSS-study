@@ -17,19 +17,17 @@ box.addEventListener("mousedown", (e) => {
     originTop = box.offsetTop;
 });
 
-document.body.addEventListener("mouseup", (e) => {
+document.addEventListener("mouseup", (e) => {
     isDragging = false;
 });
 
-container.addEventListener("mousemove", (e) => {
-    const targetClass = e.target.className;
-
-    if(isDragging && targetClass === "area__box"){
+document.addEventListener("mousemove", (e) => {
+    if(isDragging){
         const diffX = e.clientX - originX;
         const diffY = e.clientY - originY;
         const endOfXPoint = containerWidth - boxWidth;
         const endOfYPoint = containerHeight - boxHeight;
-        e.target.style.left = `${Math.min(Math.max(0, originLeft+diffX), endOfXPoint)}px`;
-        e.target.style.top = `${Math.min(Math.max(0, originTop + diffY), endOfYPoint)}px`;
+        box.style.left = `${Math.min(Math.max(0, originLeft+diffX), endOfXPoint)}px`;
+        box.style.top = `${Math.min(Math.max(0, originTop + diffY), endOfYPoint)}px`;
     }
 });
