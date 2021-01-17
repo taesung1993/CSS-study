@@ -9,6 +9,18 @@ body{
     padding-top: 50px;
 }
 
+main{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.active{
+    border: 1px solid crimson;
+}
+
 form{
     margin: 10px 0;
 }
@@ -27,6 +39,12 @@ button{
     border: 1px solid #111;
 }
 
-.active{
-    border: 1px solid crimson;
+.drag-drop input[type="file"]{
+    display: none;
+}
+
+.drag-drop label{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
 }

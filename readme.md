@@ -5,3 +5,4 @@
 [설명링크](https://taesung1993.tistory.com/92)
 3. text-editor: 바닐라 자바스크립트로 rich-text-editor 생성
 [설명링크](https://taesung1993.tistory.com/95)
+4. drag-drop-file: 바닐라 자바스크립트를 이용하여 드래그 앤 드롭을 이용한 파일 업로드 구현
