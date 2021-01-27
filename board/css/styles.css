@@ -1,5 +1,6 @@
 @import "./board.css";
 @import "./link-modal.css";
+@import "./drag-drop-modal.css";
 
 *{
     box-sizing: border-box;

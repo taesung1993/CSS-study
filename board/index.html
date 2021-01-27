@@ -126,6 +126,33 @@
         </div>
         <div class="link-modal__bg"></div>
     </div>
+    <div class="drag-drop-modal--container hidden">
+        <div class="drag-drop-modal__bg"></div>
+        <div class="drag-drop-modal">
+            <span class="drag-drop-modal__close">
+                <i class="fas fa-times"></i>
+            </span>
+            <span class="modal-icon"><i class="far fa-image"></i></span>
+            <h3>이미지를 드래그하여 업로드하세요.</h3>
+            <form class="drag-drop-modal__form">
+                <input class="drag-drop-modal__dropzone" 
+                       type="file"
+                       accept="image/*"
+                       multiple
+                       />
+                <div class="drag-drop-modal__dropzone-basic">
+                    <div class="dropzone-basic__row">
+                        <span class="dropzone-icon"><i class="fas fa-cloud-upload-alt"></i></span>
+                    </div>
+                    <div class="dropzone-basic__row">
+                        <h4 class="dropzone-basic__title">.PNG .JPG .GIF</h4>
+                        <h6 class="dropzone-basic__desc">여기에 이미지를 드래그 하세요.</h6>
+                        <h6 class="dropzone-basic__clickmsg">업로드(클릭)</h6>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="./js/index.js"></script>
     <script src="./js/board.js"></script>
 </body>
