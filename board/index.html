@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드래그 앤 드롭 게시판</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+</head>
+<body>
+    <main class="app">
+        <form class="board-container">
+            <div class="board-container__title">
+                <input type="text" id="jsBoardTitle" placeholder="제목을 입력하세요.">
+            </div>
+            <div class="board-container__text-editor">
+                <header class="text-editor__header">
+                    <ul class="text-editor__icon-list" id="jsIconList">
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="createLink">
+                                <i class="far fa-image"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <select>
+                                <option value="13px" selected>13px</option>
+                                <option value="16px">16px</option>
+                                <option value="19px">19px</option>
+                                <option value="22px">22px</option>
+                                <option value="25px">25px</option>
+                            </select>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="bold">
+                                <i class="fas fa-bold"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="italic">
+                                <i class="fas fa-italic"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="underline">
+                                <i class="fas fa-underline"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="strikeThrough">
+                                <i class="fas fa-strikethrough"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container text-color" data-cmd="foreColor">
+                                <i class="fas fa-font"></i>
+                                <span class="circle"></span>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container text-bg" data-cmd="backColor"> 
+                                <i class="fas fa-font"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="justifyLeft">
+                                <i class="fas fa-align-left"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="justifyCenter">
+                                <i class="fas fa-align-center"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="justifyRight">
+                                <i class="fas fa-align-right"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="insertOrderedList">
+                                <i class="fas fa-list-ul"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="insertUnorderedList">
+                                <i class="fas fa-list-ol"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="enableInlineTableEditing">
+                                <i class="fas fa-border-all"></i>
+                            </span>
+                        </li>
+                        <li class="test-eidtor__icon">
+                            <span class="icon-container" data-cmd="createLink">
+                                <i class="fas fa-link"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </header>
+                <main class="text-editor__text-area">
+                    <iframe id="jsTextContent" name="textEditorField"></iframe>
+                </main>
+                <footer class="text-editor__footer"></footer>
+            </div>
+        </form>
+    </main>
+    <div class="link-modal--container hidden">
+        <div class="link-modal">
+            <header class="link-modal__header">
+                <span class="modal-close-btn">
+                    <i class="fas fa-times"></i>
+                </span>
+            </header>
+            <main class="link-modal__body">
+                <span class="modal-icon"><i class="fas fa-link"></i></span>
+                <h3>URL을 입력하세요.</h3>
+                <form class="link-form">
+                    <input class="link-form__input" type="text" placeholder="URL을 입력하세요">
+                    <div class="link-form__btns">
+                        <button id="jsEnterHpyerLink">입력</button>
+                        <button id="jsCloseLinkModal">취소</button>
+                    </div>
+                </form>
+            </main>
+        </div>
+        <div class="link-modal__bg"></div>
+    </div>
+    <script src="./js/index.js"></script>
+    <script src="./js/board.js"></script>
+</body>
+</html>
