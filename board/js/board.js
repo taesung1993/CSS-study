@@ -27,7 +27,14 @@ const appliedCommandToEditor = (e) => {
             case 'uploadImage':
                 dragAndDropModal.classList.remove("hidden");
                 dragAndDropModalClose.addEventListener("click", () => {
-                    console.log("닫기 버튼 눌림");
+                    /* 드래그 앤 드롭 모달 창을 닫을 시에는 썸네일 컨테이너 태그가 동적으로 생성됐는지 확인 후
+                       생성된 상태라면, 썸네일 태그를 제거한다.
+                    */
+                    const thumbnailContainer = document.querySelector(".uploaded-box");
+                    
+                    /* 썸네일 컨테이너 태그가 있으면, 삭제한다.(초기화) */
+                    if(thumbnailContainer){ dragZone.removeChild(thumbnailContainer); }
+
                     dragAndDropModal.classList.add("hidden");
                 })
                 break;
