@@ -24,65 +24,78 @@ const appliedCommandToEditor = (e) => {
                 });
                 break;
             case 'uploadImage':
+                const dragAndDropModalClose = document.querySelector(".drag-drop-modal__close"); // 닫기 버튼(X)
+
+                const fileIsDragedOver = (e) => {
+                    e.preventDefault();
+                }
+                const fileIsDragedDrop = (e) => {
+                    e.preventDefault();
+                    /* 이벤트 버블링 막기, 이미지가 중복으로 올라가는 것을 방지*/
+                    e.stopImmediatePropagation();
+                    const thumbnailContainer = document.createElement("div");
+                    const fileList = e.dataTransfer.files;
+                    let reader = new FileReader();
+                    
+                    thumbnailContainer.classList.add("uploaded-box");
+                    
+
+                    for(let i=0; i<fileList.length; i++){
+                        const file = fileList.item(i);
+                        
+                        if(file.type.startsWith("image/")){
+                            const thumbnail = document.createElement("div");
+                            thumbnail.classList.add("thumbnail");
+                            thumbnailContainer.appendChild(thumbnail);
+                
+                            reader.readAsDataURL(file);
+                            reader.onload = () => {
+                                const uploadBtn = document.getElementById("imageUploadBtnInModal");
+                                const uploadThumbnail = (e) => {
+                                    e.preventDefault();
+                                    console.log(reader);
+                                    console.log(e.bubbles);
+                                    if(reader){
+                                        textEditorField.document.execCommand("insertImage", false, reader.result);
+                                        /* reader 값을 null로 설정해줌으로써, 이전에 업로드한 사진까지 올라오는 것을 막는다. */
+                                        reader = null;
+                                    }
+                                    else
+                                        return;
+                                }
+                
+                                thumbnail.style.backgroundImage = `url(${reader.result})`;
+                                thumbnail.style.backgroundSize = "cover";
+                                thumbnail.style.backgroundPosition = "center center";
+                                
+                                /* 업로드 버튼 눌렀을 때 동작 */
+                                uploadBtn.addEventListener("click", uploadThumbnail, true);
+                            };
+                        }
+                    }
+                
+                    dragZone.appendChild(thumbnailContainer);
+                }
+
+                /* 
+                   드래그 오버: curentTarget 태그에 드래그 오버 시, 브라우저 새 탭이 열리지 않는다. 
+                   드랍: 파일을 해당 태그에 드랍했을 때 동작하는 이벤트 함수
+                */
+                dragZone.addEventListener("dragover", fileIsDragedOver);
+                dragZone.addEventListener("drop", fileIsDragedDrop);
+
                 dragAndDropModal.classList.remove("hidden");
                 dragAndDropModalClose.addEventListener("click", () => {
                     dragAndDropModal.classList.add("hidden");
                 });   
                 break;
             default:
-                console.log(cmd);
                 textEditorField.document.execCommand(cmd, false, null);
                 break;
         }
     }
 }
 
-const fileIsDragedOver = (e) => {
-    e.preventDefault();
-}
-const fileIsDragedDrop = (e) => {
-    e.preventDefault();
-    const urls = [];
-    const thumbnailContainer = document.createElement("div");
-    const fileList = e.dataTransfer.files;
-    let reader = new FileReader();
-    
-    thumbnailContainer.classList.add("uploaded-box");
-    
-    for(let i=0; i<fileList.length; i++){
-        const file = fileList.item(i);
-        
-        if(file.type.startsWith("image/")){
-            const thumbnail = document.createElement("div");
-            thumbnail.classList.add("thumbnail");
-            thumbnailContainer.appendChild(thumbnail);
-
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const uploadBtn = document.getElementById("uploadBtn");
-                const uploadThumbnail = (e) => {
-                    e.preventDefault();
-                    if(reader){
-                        textEditorField.document.execCommand("insertImage", false, reader.result);
-                        /* reader 값을 null로 설정해줌으로써, 이전에 업로드한 사진까지 올라오는 것을 막는다. */
-                        reader = null;
-                    }
-                }
-
-                thumbnail.style.backgroundImage = `url(${reader.result})`;
-                thumbnail.style.backgroundSize = "cover";
-                thumbnail.style.backgroundPosition = "center center";
-                
-                /* 업로드 버튼 눌렀을 때 동작 */
-                uploadBtn.addEventListener("click", uploadThumbnail);
-            };
-        }
-    }
-
-    dragZone.appendChild(thumbnailContainer);
-}
 
 /* 이벤트 위임을 이용하여 버튼 제어*/
 btnList.addEventListener("click", appliedCommandToEditor);
-dragZone.addEventListener("dragover", fileIsDragedOver);
-dragZone.addEventListener("drop", fileIsDragedDrop);
