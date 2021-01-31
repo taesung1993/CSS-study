@@ -6,6 +6,5 @@ const modalComplete = document.getElementById("jsEnterHpyerLink");
 const modalCancleBtn = document.getElementById("jsCloseLinkModal");
 const dragAndDropModal = document.querySelector(".drag-drop-modal--container");
 const dragZone = document.querySelector(".drag-drop-modal__form");
-const cancelBtnInModal = document.getElementById("cancelBtnInModal"); //취소 버튼
 
 textEditorField.document.designMode = "On";

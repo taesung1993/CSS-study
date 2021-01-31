@@ -25,6 +25,8 @@ const appliedCommandToEditor = (e) => {
                 break;
             case 'uploadImage':
                 const dragAndDropModalClose = document.querySelector(".drag-drop-modal__close"); // 닫기 버튼(X)
+                const cancelBtnInModal = document.getElementById("cancelBtnInModal"); //취소 버튼
+                const closeBtns = [dragAndDropModalClose, cancelBtnInModal];
 
                 const fileIsDragedOver = (e) => {
                     e.preventDefault();
@@ -53,15 +55,18 @@ const appliedCommandToEditor = (e) => {
                                 const uploadBtn = document.getElementById("imageUploadBtnInModal");
                                 const uploadThumbnail = (e) => {
                                     e.preventDefault();
-                                    console.log(reader);
-                                    console.log(e.bubbles);
+                                    const thumbnailBox = document.querySelector(".uploaded-box");
                                     if(reader){
                                         textEditorField.document.execCommand("insertImage", false, reader.result);
                                         /* reader 값을 null로 설정해줌으로써, 이전에 업로드한 사진까지 올라오는 것을 막는다. */
                                         reader = null;
                                     }
-                                    else
-                                        return;
+                                    if(thumbnailBox){
+                                        /* 썸네일 박스가 등록되어 있다면, 이를 제거한다. */
+                                        dragZone.removeChild(thumbnailBox);
+                                    }
+                                    /* 모달을 닫는다. */
+                                    dragAndDropModal.classList.add("hidden");
                                 }
                 
                                 thumbnail.style.backgroundImage = `url(${reader.result})`;
@@ -77,17 +82,31 @@ const appliedCommandToEditor = (e) => {
                     dragZone.appendChild(thumbnailContainer);
                 }
 
+                const processCloseBtn = (e) => {
+                    e.preventDefault();
+                    /* 썸네일 박스를 지우고, reader를 초기화 시킨다. */
+                    const thumbnailBox = document.querySelector(".uploaded-box");
+                    if(thumbnailBox){
+                        dragZone.removeChild(thumbnailBox);
+                    }
+                    reader = null;
+                    dragAndDropModal.classList.add("hidden");
+                }
+
                 /* 
                    드래그 오버: curentTarget 태그에 드래그 오버 시, 브라우저 새 탭이 열리지 않는다. 
                    드랍: 파일을 해당 태그에 드랍했을 때 동작하는 이벤트 함수
                 */
+                 
                 dragZone.addEventListener("dragover", fileIsDragedOver);
                 dragZone.addEventListener("drop", fileIsDragedDrop);
 
-                dragAndDropModal.classList.remove("hidden");
-                dragAndDropModalClose.addEventListener("click", () => {
-                    dragAndDropModal.classList.add("hidden");
-                });   
+                dragAndDropModal.classList.remove("hidden");   
+
+                /* 취소 버튼, x표 버튼 모달 닫기 처리 */
+                closeBtns.forEach((closeBtn) => {
+                    closeBtn.addEventListener("click", processCloseBtn);
+                });
                 break;
             default:
                 textEditorField.document.execCommand(cmd, false, null);
