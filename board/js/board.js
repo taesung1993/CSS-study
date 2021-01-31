@@ -8,7 +8,6 @@ const appliedCommandToEditor = (e) => {
                 linkModal.classList.remove("hidden");
                 /* link 모달 취소 버튼 눌렀을 때 또는 닫기 버튼을 눌렀을 때 모달을 숨긴다.*/
                 [modalCloseBtn, modalCancleBtn].forEach((closeBtn) => {
-                    console.log(closeBtn);
                     closeBtn.addEventListener("click", (e) => {
                         e.preventDefault();
                         linkModal.classList.add("hidden");
@@ -27,7 +26,6 @@ const appliedCommandToEditor = (e) => {
             case 'uploadImage':
                 dragAndDropModal.classList.remove("hidden");
                 dragAndDropModalClose.addEventListener("click", () => {
-                    console.log("닫기 버튼 눌림");
                     dragAndDropModal.classList.add("hidden");
                 })
                 break;
@@ -44,8 +42,10 @@ const fileIsDragedOver = (e) => {
 }
 const fileIsDragedDrop = (e) => {
     e.preventDefault();
+    const urls = [];
     const thumbnailContainer = document.createElement("div");
     const fileList = e.dataTransfer.files;
+    let reader = new FileReader();
     
     thumbnailContainer.classList.add("uploaded-box");
     
@@ -53,16 +53,28 @@ const fileIsDragedDrop = (e) => {
         const file = fileList.item(i);
         
         if(file.type.startsWith("image/")){
-            const reader = new FileReader();
             const thumbnail = document.createElement("div");
             thumbnail.classList.add("thumbnail");
             thumbnailContainer.appendChild(thumbnail);
 
             reader.readAsDataURL(file);
             reader.onload = () => {
+                const uploadBtn = document.getElementById("uploadBtn");
+                const uploadThumbnail = (e) => {
+                    e.preventDefault();
+                    if(reader){
+                        textEditorField.document.execCommand("insertImage", false, reader.result);
+                        /* reader 값을 null로 설정해줌으로써, 이전에 업로드한 사진까지 올라오는 것을 막는다. */
+                        reader = null;
+                    }
+                }
+
                 thumbnail.style.backgroundImage = `url(${reader.result})`;
                 thumbnail.style.backgroundSize = "cover";
                 thumbnail.style.backgroundPosition = "center center";
+                
+                /* 업로드 버튼 눌렀을 때 동작 */
+                uploadBtn.addEventListener("click", uploadThumbnail);
             };
         }
     }
