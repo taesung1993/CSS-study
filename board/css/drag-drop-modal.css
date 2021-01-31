@@ -19,11 +19,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 500px;
-    height: 400px;
+    min-height: 400px;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border-radius: 5px;
-    padding: 0 60px;
+    padding: 40px 60px;
     display: flex;
     flex-direction: column;
 }
@@ -45,7 +45,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
 }
 
 .drag-drop-modal h3{
@@ -74,6 +73,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.drag-drop-modal .form__footer{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.drag-drop-modal .form__footer button{
+    height: 30px;
+    padding: 5px 10px;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.drag-drop-modal .form__footer #imageUploadBtnInModal{
+    margin-right: 5px;
+    background: #005cff;
+    color: white;
 }
 
 .drag-drop-modal .drag-drop-modal__form .uploaded-box .thumbnail{
