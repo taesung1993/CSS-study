@@ -24,10 +24,31 @@ const appliedCommandToEditor = (e) => {
                 });
                 break;
             case 'uploadImage':
+<<<<<<< HEAD
                 dragAndDropModal.classList.remove("hidden");
                 dragAndDropModalClose.addEventListener("click", () => {
+=======
+                const uploadBtnInDragZone = document.getElementById("imageUploadBtnInModal");
+                const cancelBtnInDragZone = document.getElementById("cancelBtnInModal");
+
+                const closeUploadImageModal = (e) => {
+                    e.preventDefault();
+                    /* 드래그 앤 드롭 모달 창을 닫을 시에는 썸네일 컨테이너 태그가 동적으로 생성됐는지 확인 후
+                       생성된 상태라면, 썸네일 태그를 제거한다.
+                    */
+                    const thumbnailContainer = document.querySelector(".uploaded-box");
+                    
+                    /* 썸네일 컨테이너 태그가 있으면, 삭제한다.(초기화) */
+                    if(thumbnailContainer){ dragZone.removeChild(thumbnailContainer); }
+>>>>>>> b68adae5182a03744c0cfe6345e964490b8be7af
                     dragAndDropModal.classList.add("hidden");
-                })
+                }
+
+                dragAndDropModal.classList.remove("hidden");
+                [dragAndDropModalClose, cancelBtnInDragZone].forEach((closeElement) => {
+                    closeElement.addEventListener("click", closeUploadImageModal);
+                });
+                
                 break;
             default:
                 console.log(cmd);
