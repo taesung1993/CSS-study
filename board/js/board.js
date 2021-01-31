@@ -21,7 +21,16 @@ const appliedCommandToEditor = (e) => {
                     modalInput.value = "";
                     textEditorField.document.execCommand(cmd, false, link);
                     linkModal.classList.add("hidden");
+
+                    /* 텍스트 필드에 a태그를 생성 후 이벤트를 걸어준다. */
+                    const atags = textEditorField.document.querySelectorAll("a");
+                    atags.forEach((atag) => {
+                        atag.target = "_blank";
+                        atag.addEventListener("mouseover", (e) => {textEditorField.document.designMode = "Off"; });
+                        atag.addEventListener("mouseout", (e) => {textEditorField.document.designMode = "On"; });
+                    });
                 });
+
                 break;
             case 'uploadImage':
                 const dragAndDropModalClose = document.querySelector(".drag-drop-modal__close"); // 닫기 버튼(X)
