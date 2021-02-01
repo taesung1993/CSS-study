@@ -127,3 +127,9 @@ const appliedCommandToEditor = (e) => {
 
 /* 이벤트 위임을 이용하여 버튼 제어*/
 btnList.addEventListener("click", appliedCommandToEditor);
+jsChangeFontSize.addEventListener("change", (e) => {
+    const langSelect = e.currentTarget;
+    const selectedValue = langSelect.options[langSelect.selectedIndex].value;
+    const command = "fontSize";
+    textEditorField.document.execCommand(command, false, selectedValue);
+});

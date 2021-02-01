@@ -1,4 +1,5 @@
 const btnList = document.querySelector(".text-editor__icon-list");
+const jsChangeFontSize = document.getElementById("jsChangeFontSize");
 const linkModal = document.querySelector(".link-modal--container");
 const modalCloseBtn = linkModal.querySelector(".modal-close-btn");
 const modalInput = linkModal.querySelector(".link-form__input");
