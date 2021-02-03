@@ -1,11 +1,14 @@
 const generatePallete = (tag) => {
     const pallete = document.createElement("div");
+    const colors = ["#000000", "#ffffff", "#7f8c8d", "#e74c3c", "#e67e22", "#34495e", "#f1c40f", "#27ae60", "#3498db", "#8e44ad"];
     
     pallete.classList.add("palette");
 
     /* 컬러 태그 생성 */
-    for(let i=0; i<10; i++){
+    for(let i=0; i<colors.length; i++){
         const color = document.createElement("span");
+        color.style.backgroundColor = `${colors[i]}`;
+        color.dataset.colorData = colors[i];
         color.classList.add("color");
         pallete.appendChild(color);
     }
