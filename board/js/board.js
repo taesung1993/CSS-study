@@ -1,3 +1,18 @@
+const generatePallete = (tag) => {
+    const pallete = document.createElement("div");
+    
+    pallete.classList.add("palette");
+
+    /* 컬러 태그 생성 */
+    for(let i=0; i<10; i++){
+        const color = documnet.createElement("span");
+        color.classList.add("color");
+        pallete.appendChild(color);
+    }
+
+    tag.appendChild(pallete);
+}
+
 const appliedCommandToEditor = (e) => {
     const btn = e.target.closest(".icon-container");
 
