@@ -5,12 +5,17 @@ const generatePallete = (tag) => {
 
     /* 컬러 태그 생성 */
     for(let i=0; i<10; i++){
-        const color = documnet.createElement("span");
+        const color = document.createElement("span");
         color.classList.add("color");
         pallete.appendChild(color);
     }
 
     tag.appendChild(pallete);
+}
+
+const removePallete = (tag) => {
+    const pallete = tag.querySelector(".palette");
+    tag.removeChild(pallete);
 }
 
 const appliedCommandToEditor = (e) => {
@@ -131,6 +136,19 @@ const appliedCommandToEditor = (e) => {
                 closeBtns.forEach((closeBtn) => {
                     closeBtn.addEventListener("click", processCloseBtn);
                 });
+                break;
+            case 'foreColor':
+                const textEditorIcon = e.target.closest("li");
+
+                if(!isPalleteFromTextColor){
+                    textEditorIcon.style.position = "relative";
+                    generatePallete(textEditorIcon);
+                    isPalleteFromTextColor = true;
+                }
+                else{
+                    removePallete(textEditorIcon);
+                    isPalleteFromTextColor = false;
+                }
                 break;
             default:
                 textEditorField.document.execCommand(cmd, false, null);
