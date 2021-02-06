@@ -1,7 +1,32 @@
+const removePallete = (tag) => {
+    const pallete = tag.querySelector(".palette");
+    tag.removeChild(pallete);
+}
+
+const changeTextColor = (e, cmd) => {
+    const rootTarget = e.currentTarget;
+    const selectedColor = e.target.closest(".color");
+
+    if(selectedColor){
+        const colorData = selectedColor.dataset.colorData;
+        textEditorField.document.execCommand(cmd, false, colorData);
+        removePallete(rootTarget.parentNode);
+        switch(cmd){
+            case 'foreColor':
+                isPalleteFromTextColor = false;
+                break;
+            case 'hiliteColor':
+                isPalleteFromTextBgColor = false;
+                break;
+        }
+    }
+};
+
 const generatePallete = (tag) => {
     const pallete = document.createElement("div");
     const colors = ["#000000", "#ffffff", "#7f8c8d", "#e74c3c", "#e67e22", "#34495e", "#f1c40f", "#27ae60", "#3498db", "#8e44ad"];
-    
+    const iconNode = tag.querySelector(".icon-container");
+    const cmd = iconNode.dataset.cmd;
     pallete.classList.add("palette");
 
     /* 컬러 태그 생성 */
@@ -13,13 +38,11 @@ const generatePallete = (tag) => {
         pallete.appendChild(color);
     }
 
+    pallete.addEventListener("click", (e) => {changeTextColor(e, cmd);});
+
     tag.appendChild(pallete);
 }
 
-const removePallete = (tag) => {
-    const pallete = tag.querySelector(".palette");
-    tag.removeChild(pallete);
-}
 
 const appliedCommandToEditor = (e) => {
     const btn = e.target.closest(".icon-container");
@@ -141,16 +164,29 @@ const appliedCommandToEditor = (e) => {
                 });
                 break;
             case 'foreColor':
-                const textEditorIcon = e.target.closest("li");
+                const textColorIcon = e.target.closest("li");
 
                 if(!isPalleteFromTextColor){
-                    textEditorIcon.style.position = "relative";
-                    generatePallete(textEditorIcon);
+                    textColorIcon.style.position = "relative";
+                    generatePallete(textColorIcon);
                     isPalleteFromTextColor = true;
                 }
                 else{
-                    removePallete(textEditorIcon);
+                    removePallete(textColorIcon);
                     isPalleteFromTextColor = false;
+                }
+                break;
+            case 'hiliteColor':
+                const hilightColorIcon = e.target.closest("li");
+
+                if(!isPalleteFromTextBgColor){
+                    hilightColorIcon.style.position = "relative";
+                    generatePallete(hilightColorIcon);
+                    isPalleteFromTextBgColor = true;
+                }
+                else{
+                    removePallete(hilightColorIcon);
+                    isPalleteFromTextBgColor = false;
                 }
                 break;
             default:

@@ -9,5 +9,6 @@ const dragAndDropModal = document.querySelector(".drag-drop-modal--container");
 const dragZone = document.querySelector(".drag-drop-modal__form");
 
 let isPalleteFromTextColor = false;
+let isPalleteFromTextBgColor = false;
 
 textEditorField.document.designMode = "On";
