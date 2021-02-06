@@ -83,17 +83,9 @@ const appliedCommandToEditor = (e) => {
                 const cancelBtnInModal = document.getElementById("cancelBtnInModal"); //취소 버튼
                 const closeBtns = [dragAndDropModalClose, cancelBtnInModal];
 
-                const fileIsDragedOver = (e) => {
-                    e.preventDefault();
-                }
-                const fileIsDragedDrop = (e) => {
-                    e.preventDefault();
-                    /* 이벤트 버블링 막기, 이미지가 중복으로 올라가는 것을 방지*/
-                    e.stopImmediatePropagation();
+                const updateThumbnail = (fileList) => {
+                    /* 파일 리스트를 받아서 게시판에 사진 추가*/
                     const thumbnailContainer = document.createElement("div");
-                    /* 받은 이벤트 파일을 인풋 태그에 넣는다. */
-                    dropZone.file = e.dataTransfer.files;
-                    const fileList = dropZone.file;
                     let reader = new FileReader();
                     
                     thumbnailContainer.classList.add("uploaded-box");
@@ -137,6 +129,19 @@ const appliedCommandToEditor = (e) => {
                     }
                 
                     dragZone.appendChild(thumbnailContainer);
+                }
+                const fileIsDragedOver = (e) => {
+                    e.preventDefault();
+                }
+                const fileIsDragedDrop = (e) => {
+                    e.preventDefault();
+                    /* 이벤트 버블링 막기, 이미지가 중복으로 올라가는 것을 방지*/
+                    e.stopImmediatePropagation();
+                    /* 받은 이벤트 파일을 인풋 태그에 넣는다. */
+                    dropZone.file = e.dataTransfer.files;
+                    const fileList = dropZone.file;
+
+                    updateThumbnail(fileList);
                 }
 
                 const processCloseBtn = (e) => {
