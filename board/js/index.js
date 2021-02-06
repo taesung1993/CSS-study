@@ -7,6 +7,7 @@ const modalComplete = document.getElementById("jsEnterHpyerLink");
 const modalCancleBtn = document.getElementById("jsCloseLinkModal");
 const dragAndDropModal = document.querySelector(".drag-drop-modal--container");
 const dragZone = document.querySelector(".drag-drop-modal__form");
+const dropZone = document.querySelector(".drag-drop-modal__dropzone");
 
 let isPalleteFromTextColor = false;
 let isPalleteFromTextBgColor = false;

@@ -91,7 +91,9 @@ const appliedCommandToEditor = (e) => {
                     /* 이벤트 버블링 막기, 이미지가 중복으로 올라가는 것을 방지*/
                     e.stopImmediatePropagation();
                     const thumbnailContainer = document.createElement("div");
-                    const fileList = e.dataTransfer.files;
+                    /* 받은 이벤트 파일을 인풋 태그에 넣는다. */
+                    dropZone.file = e.dataTransfer.files;
+                    const fileList = dropZone.file;
                     let reader = new FileReader();
                     
                     thumbnailContainer.classList.add("uploaded-box");
@@ -152,7 +154,13 @@ const appliedCommandToEditor = (e) => {
                    드래그 오버: curentTarget 태그에 드래그 오버 시, 브라우저 새 탭이 열리지 않는다. 
                    드랍: 파일을 해당 태그에 드랍했을 때 동작하는 이벤트 함수
                 */
+
+                const clickedDragZone = (e) => {
+                    e.preventDefault();
+                    console.log("클릭했음!");
+                }
                  
+                dragZone.addEventListener("click", clickedDragZone);
                 dragZone.addEventListener("dragover", fileIsDragedOver);
                 dragZone.addEventListener("drop", fileIsDragedDrop);
 
