@@ -82,14 +82,15 @@ const appliedCommandToEditor = (e) => {
                 const dragAndDropModalClose = document.querySelector(".drag-drop-modal__close"); // 닫기 버튼(X)
                 const cancelBtnInModal = document.getElementById("cancelBtnInModal"); //취소 버튼
                 const closeBtns = [dragAndDropModalClose, cancelBtnInModal];
+                let reader = new FileReader();
 
                 const updateThumbnail = (fileList) => {
                     /* 파일 리스트를 받아서 게시판에 사진 추가*/
                     const thumbnailContainer = document.createElement("div");
-                    let reader = new FileReader();
                     
                     thumbnailContainer.classList.add("uploaded-box");
-                    
+                    console.log(fileList);
+                    reader = new FileReader();
 
                     for(let i=0; i<fileList.length; i++){
                         const file = fileList.item(i);
@@ -145,7 +146,7 @@ const appliedCommandToEditor = (e) => {
                 }
 
                 const processCloseBtn = (e) => {
-                    e.preventDefault();
+                    e.stopImmediatePropagation();
                     /* 썸네일 박스를 지우고, reader를 초기화 시킨다. */
                     const thumbnailBox = document.querySelector(".uploaded-box");
                     if(thumbnailBox){
@@ -155,16 +156,28 @@ const appliedCommandToEditor = (e) => {
                     dragAndDropModal.classList.add("hidden");
                 }
 
+
                 /* 
                    드래그 오버: curentTarget 태그에 드래그 오버 시, 브라우저 새 탭이 열리지 않는다. 
                    드랍: 파일을 해당 태그에 드랍했을 때 동작하는 이벤트 함수
                 */
 
                 const clickedDragZone = (e) => {
+                    /*stopImmediatePropagation는 같은 이벤트에서 다른 리스너들이 불려지는 것을 막는 것으로, input[type='file']이 두 세번 이상 눌러지는 것을 방지한다. */
+                    e.stopImmediatePropagation();
+                    dropZone.click();
+                }
+                const changeDropZone = (e) => {
+                    /* 사진이 여러 개 추가되는 것을 막는다. */
                     e.preventDefault();
-                    console.log("클릭했음!");
+                    e.stopImmediatePropagation();
+                    if(dropZone.files.length){
+                        const fileList = dropZone.files;
+                        updateThumbnail(fileList);
+                    }
                 }
                  
+                dropZone.addEventListener("change", changeDropZone);
                 dragZone.addEventListener("click", clickedDragZone);
                 dragZone.addEventListener("dragover", fileIsDragedOver);
                 dragZone.addEventListener("drop", fileIsDragedDrop);
